@@ -1,0 +1,14 @@
+register code: 627509
+
+INFO:yowsup.common.http.warequest:{"status":"ok","login":"555381299636","type":"new","pw":"pJ5MX5sGp9KfsJOZTnCi8Nnr4rA=","expiration":4444444444.0,"kind":"free","price":"US$0.99","cost":"0.99","currency":"USD","price_expiration":1508814472}
+
+status: ok
+kind: free
+pw: pJ5MX5sGp9KfsJOZTnCi8Nnr4rA=
+price: US$0.99
+price_expiration: 1508814472
+currency: USD
+cost: 0.99
+expiration: 4444444444.0
+login: 555381299636
+type: new
