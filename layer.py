@@ -47,7 +47,22 @@ class EchoLayer(YowInterfaceLayer):
                 command = messageProtocolEntity.getBody().split('!')[1]
                 command = command.split(' ')
                 #ações
-                if command[0] == "novaraid":
+                if command[0] == "registrar":
+                    #!novaraid <local> <hora> <inimigo> <codigo>
+                    if len(command) == 4:
+                        c.execute("SELECT u.* from Users as u WHERE u.number == '{0}'".format(userNumber))
+                        result = c.fetchone()
+                        if len(result) != 0:
+                            c.execute("UPDATE Users SET 'nickname' = '{0}', 'team' = '{1}','level' = '{2}' WHERE Users.number == '{3}'".format(command[1], command[2], command[3],userNumber))
+                            conn.commit()
+
+                            body = "Você foi registrado com sucesso {0}".format(command[1])
+                        else:
+                            body = "Erro, você não está nos conformes"
+                    else:
+                        body = "Para executar esta ação utilize esta sintaxe: \n!registrar <nickname> <time> <nível>"
+                
+                elif command[0] == "novaraid":
                     #!novaraid <local> <hora> <inimigo> <codigo>
                     if len(command) == 5:
                         c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}'".format(command[4]))
