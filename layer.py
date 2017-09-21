@@ -37,10 +37,10 @@ class EchoLayer(YowInterfaceLayer):
             print dir(messageProtocolEntity)
             print "AUTHOR: "+messageProtocolEntity.getAuthor()
             print "FROM: "+messageProtocolEntity.getFrom()
-            print "TO: "+str(messageProtocolEntity.getTo())
-            print "PARTICIPANT: "+str(messageProtocolEntity.getParticipant())
+            print "TO: "+str(messageProtocolEntity.getTo()).encode('utf-8')
+            print "PARTICIPANT: "+str(messageProtocolEntity.getParticipant()).encode('utf-8')
             print "TYPE: "+messageProtocolEntity.getType()
-            print "Isgroup: "+str(messageProtocolEntity.isGroupMessage())
+            print "Isgroup: "+str(messageProtocolEntity.isGroupMessage()).encode('utf-8')
             print "BODY: "+messageProtocolEntity.getBody()
             print "============================================================="
             if messageProtocolEntity.getBody().startswith("!"):
