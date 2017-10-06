@@ -5,6 +5,7 @@ from yowsup.layers.protocol_acks.protocolentities      import OutgoingAckProtoco
 
 import re
 import sqlite3
+import time
 import random, string
 
 class EchoLayer(YowInterfaceLayer):
@@ -175,10 +176,11 @@ class EchoLayer(YowInterfaceLayer):
 
                 message = header+body
 
+                time.sleep(5)
                 outgoingMessageProtocolEntity = TextMessageProtocolEntity(
                     message,
                     to = messageProtocolEntity.getAuthor())
-            
+                
                 self.toLower(outgoingMessageProtocolEntity)
         
         conn.close()
