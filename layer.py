@@ -127,7 +127,8 @@ class EchoLayer(YowInterfaceLayer):
                         if len(result) == 0:
                             body = "Esta raid não existe"
                         else:
-                            c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}' and r.owner == '{1}'".format(command[1],userNumber))
+                            c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}'".format(command[1]))
+                            # c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}' and r.owner == '{1}'".format(command[1],userNumber))
                             result = c.fetchall()
                             if len(result) == 0:
                                 body = "Apenas o criador pode remover uma lista de raid"
