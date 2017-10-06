@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 from yowsup.layers.interface                           import YowInterfaceLayer, ProtocolEntityCallback
 from yowsup.layers.protocol_messages.protocolentities  import TextMessageProtocolEntity
 from yowsup.layers.protocol_receipts.protocolentities  import OutgoingReceiptProtocolEntity
 from yowsup.layers.protocol_acks.protocolentities      import OutgoingAckProtocolEntity
+
 import re
 import sqlite3
 import random, string
@@ -10,18 +10,33 @@ import random, string
 class EchoLayer(YowInterfaceLayer):
     
     def randomword(self, length):
-       letters = string.ascii_lowercase
-       return ''.join(random.choice(letters) for i in range(length))
+        letters = string.ascii_lowercase
+        return ''.join(random.choice(letters) for i in range(length))
 
     @ProtocolEntityCallback("message")
     def onMessage(self, messageProtocolEntity):
+        # receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom(), 'read', messageProtocolEntity.getParticipant())
+        # self.toLower(receipt)
+
+        # if messageProtocolEntity.getType() == "text":
+        #     if messageProtocolEntity.getBody().startswith("!"):
+        #         header = "*=== TARS PokeBot ===*\n\n"
+
+        #         message = header
+
+        #         outgoingMessageProtocolEntity = TextMessageProtocolEntity(
+        #             message,
+        #             to = messageProtocolEntity.getAuthor())
+            
+        #         self.toLower(outgoingMessageProtocolEntity)
         conn = sqlite3.connect('database.db')
-        #send receipt otherwise we keep receiving the same message over and over
+        # send receipt otherwise we keep receiving the same message over and over
+        
+        receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom(), 'read', messageProtocolEntity.getParticipant())
+        self.toLower(receipt)
         
         if messageProtocolEntity.getType() == "text":
-            receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom(), 'read', messageProtocolEntity.getParticipant())
-            self.toLower(receipt)
-
+    
             body = ""
 
             c = conn.cursor()
@@ -33,16 +48,16 @@ class EchoLayer(YowInterfaceLayer):
                 c.execute("INSERT INTO Users ('number') values ('{0}')".format(userNumber))
                 conn.commit()
 
-            print "============================================================="
-            print dir(messageProtocolEntity)
-            print "AUTHOR: "+messageProtocolEntity.getAuthor()
-            print "FROM: "+messageProtocolEntity.getFrom()
-            print "TO: "+str(messageProtocolEntity.getTo()).encode('utf-8')
-            print "PARTICIPANT: "+str(messageProtocolEntity.getParticipant()).encode('utf-8')
-            print "TYPE: "+messageProtocolEntity.getType()
-            print "Isgroup: "+str(messageProtocolEntity.isGroupMessage()).encode('utf-8')
-            print "BODY: "+messageProtocolEntity.getBody()
-            print "============================================================="
+            # print("=============================================================")
+            # print(dir(messageProtocolEntity))
+            # print("AUTHOR: "+messageProtocolEntity.getAuthor())
+            # print("FROM: "+messageProtocolEntity.getFrom())
+            # print("TO: "+str(messageProtocolEntity.getTo()).encode('utf-8'))
+            # print("PARTICIPANT: "+str(messageProtocolEntity.getParticipant()).encode('utf-8'))
+            # print("TYPE: "+messageProtocolEntity.getType())
+            # print("Isgroup: "+str(messageProtocolEntity.isGroupMessage()).encode('utf-8'))
+            # print("BODY: "+messageProtocolEntity.getBody())
+            # print("=============================================================")
             if messageProtocolEntity.getBody().startswith("!"):
                 command = messageProtocolEntity.getBody().split('!')[1]
                 command = command.split(' ')

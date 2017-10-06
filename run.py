@@ -3,19 +3,25 @@ from layer import EchoLayer
 from yowsup.layers.auth import AuthError
 from yowsup.layers import YowLayerEvent
 from yowsup.layers.network import YowNetworkLayer
+from yowsup.layers.protocol_iq import YowIqProtocolLayer
+from yowsup.layers.logger                      import YowLoggerLayer
 from yowsup.env                                import YowsupEnv
 
-CREDENTIALS = ("555381299636", "pJ5MX5sGp9KfsJOZTnCi8Nnr4rA=") # replace with your phone and password
-#CREDENTIALS = DemosArgParser._getCredentials()
+class PokeBot:
 
-if __name__==  "__main__":
-    stackBuilder = YowStackBuilder()
+    def __init__(self, credentials, encryptionEnabled = True):
+        stackBuilder = YowStackBuilder()
 
-    stack = stackBuilder\
-        .pushDefaultLayers(True)\
-        .push(EchoLayer)\
-        .build()
+        self.stack = stackBuilder\
+            .pushDefaultLayers(encryptionEnabled)\
+            .push(EchoLayer)\
+            .build()
 
-    stack.setCredentials(CREDENTIALS)
-    stack.broadcastEvent(YowLayerEvent(YowNetworkLayer.EVENT_STATE_CONNECT))   #sending the connect signal
-    stack.loop() #this is the program mainloop
+        self.stack.setCredentials(credentials)
+
+    def start(self):
+        self.stack.broadcastEvent(YowLayerEvent(YowNetworkLayer.EVENT_STATE_CONNECT))
+        try:
+            self.stack.loop()
+        except AuthError as e:
+            print("Authentication Error: %s" % e.message)
