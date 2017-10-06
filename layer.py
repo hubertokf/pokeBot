@@ -32,7 +32,7 @@ class EchoLayer(YowInterfaceLayer):
         #         self.toLower(outgoingMessageProtocolEntity)
         conn = sqlite3.connect('database.db')
         # send receipt otherwise we keep receiving the same message over and over
-        
+        time.sleep(2)
         receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom(), 'read', messageProtocolEntity.getParticipant())
         self.toLower(receipt)
         
