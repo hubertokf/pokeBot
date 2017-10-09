@@ -15,11 +15,11 @@ while True:
     credentials = (NUMBER, PASS)
     pbb = PokeBot(credentials)
     
-    # try:
-    #     print("========================================================================================")
-    #     print("tentando novamente")
-    pbb.start()
-    # except:
-    #     print("bugou, 10s para reestabelecer")
-    #     time.sleep(10)
-    #     continue
+    try:
+        print("========================================================================================")
+        print("tentando novamente")
+        pbb.start()
+    except:
+        print("bugou, 10s para reestabelecer")
+        time.sleep(10)
+        continue
