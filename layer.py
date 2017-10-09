@@ -78,7 +78,7 @@ class EchoLayer(YowInterfaceLayer):
                     else:
                         body = "Para executar esta ação utilize esta sintaxe: \n!registrar <nickname> <time> <nível>"
                 
-                elif command[0] == "novaraid":
+                elif command[0] == "nova":
                     #!novaraid <local> <hora> <inimigo> <codigo>
                     if len(command) == 5:
                         c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}'".format(command[4]))
@@ -101,7 +101,7 @@ class EchoLayer(YowInterfaceLayer):
                     else:
                         body = "Para executar esta ação utilize esta sintaxe: \n!novaraid <local> <hora> <inimigo> <codigo>\nSe o código não for fornecido, será gerado um randomico."
                 
-                elif command[0] == "listarraids":
+                elif command[0] == "listar":
                     #!listaraids
                     c.execute("SELECT r.* from Raids as r")
                     result = c.fetchall()
@@ -120,7 +120,7 @@ class EchoLayer(YowInterfaceLayer):
                     else:
                         body = "Nenhuma raid cadastrada"
                 
-                elif command[0] == "removerraid":
+                elif command[0] == "remover":
                     if len(command) == 2:
                         c.execute("SELECT r.* from Raids as r WHERE r.code == '{0}'".format(command[1]))
                         result = c.fetchall()
@@ -139,7 +139,7 @@ class EchoLayer(YowInterfaceLayer):
                     else:
                         body = "Para executar esta ação utilize esta sintaxe: \n!removerraid <codigo>"
                 
-                elif command[0] == "entrarraid":
+                elif command[0] == "entrar":
                     if len(command) == 2:
                         c.execute("SELECT p.* from Participants as p WHERE p.raid == '{0}' and p.user == '{1}'".format(command[1],userNumber))
                         result = c.fetchall()
@@ -152,7 +152,7 @@ class EchoLayer(YowInterfaceLayer):
                     else:
                         body = "Para executar esta ação utilize esta sintaxe: \n!entrarraid <codigo>"
                 
-                elif command[0] == "sairraid":
+                elif command[0] == "sair":
                     if len(command) == 2:
                         c.execute("SELECT p.* from Participants as p WHERE p.raid == '{0}' and p.user == '{1}'".format(command[1],userNumber))
                         result = c.fetchall()
