@@ -177,7 +177,7 @@ class EchoLayer(YowInterfaceLayer):
 
                 message = header+body
 
-                time.sleep(5)
+                time.sleep(2)
                 outgoingMessageProtocolEntity = TextMessageProtocolEntity(
                     message,
                     to = messageProtocolEntity.getAuthor())
